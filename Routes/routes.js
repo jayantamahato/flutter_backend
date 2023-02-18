@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { account, makeTransaction, transaction,signIn } from "../userControl/userController.js";
+import { account, makeTransaction, transaction,signIn, accountDetails } from "../userControl/userController.js";
 const app = express();
 const route = express.Router();
 
@@ -14,6 +14,8 @@ route.post('/signin',signIn);
 // adding transaction
 route.post('/maketransaction', makeTransaction);
 //fetch all transaction
-route.get('/transactions',transaction)
+route.get('/transactions', transaction);
+//fech account details
+route.get('/accountDetails', accountDetails);
 
 export default route;

@@ -72,3 +72,13 @@ export const transaction = async (req, res) => {
         res.status(500).json({message:error.message})
     }
 }
+//fetch accoutn details
+export const accountDetails = async (req, res) => {
+    const data = req.body;
+    try {
+        const result = await accountCollection.findOne(data);
+        res.send(result);
+    } catch (error) {
+        res.status(500).json({message:error.message})
+    }
+}
