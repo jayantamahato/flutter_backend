@@ -16,6 +16,6 @@ route.post('/maketransaction', makeTransaction);
 //fetch all transaction
 route.get('/transactions', transaction);
 //fech account details
-route.get('/accountDetails', accountDetails);
+route.post('/accountDetails', accountDetails);
 
 export default route;
