@@ -5,6 +5,8 @@ import transactionCollection from "../schema/transactionSchema.js";
 export const account = async (req, res) => {
     const data = req.body;
     data.availableBalance = 0 ;
+    data.income = 0 ;
+    data.expenses = 0 ;
     console.log(data)
     const validData = accountCollection(data);
     try {
@@ -36,16 +38,24 @@ export const makeTransaction = async(req, res) => {
     let searchRes = await accountCollection.find({ name: data.name });
     searchRes = searchRes[0];
     let availableBalance = searchRes.availableBalance;    
+    let income = searchRes.income;    
+    let expenses = searchRes.expenses;    
         //condition 
     if (data.type == 'income') {
         availableBalance += data.amount;
+        income += data.amount;
         searchRes.availableBalance = availableBalance;
+        searchRes.income = income;
     } else if (data.type == 'expenses') {
         availableBalance -= data.amount;
+        expenses += data.amount;
+        searchRes.expenses = expenses;
         searchRes.availableBalance = availableBalance;
     }
     const value = {
-        availableBalance:availableBalance
+        availableBalance: availableBalance,
+        income: income,
+        expenses:expenses
     }
     const filter = {
         name:data.name

@@ -8,6 +8,12 @@ const accountSchema = new mongoose.Schema({
     },
     availableBalance: {
         type: Number
+    },
+    income:{
+    type:Number
+    },
+    expenses:{
+        type:Number
     }
 });
 const accountCollection = mongoose.model('accounts', accountSchema);
