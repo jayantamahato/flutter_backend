@@ -24,7 +24,7 @@ export const signIn = async (req, res) => {
     try {
         const result = await accountCollection.findOne(data);
         if (result) {
-        res.status(200).json({message:"user found"}) 
+            res.send(result); 
         } else {
             res.status(204).json({message:"user not found"})
         }
@@ -37,20 +37,26 @@ export const makeTransaction = async(req, res) => {
     const data = req.body;
     let searchRes = await accountCollection.find({ name: data.name });
     searchRes = searchRes[0];
-    let availableBalance = searchRes.availableBalance;    
-    let income = searchRes.income;    
-    let expenses = searchRes.expenses;    
+    console.log(JSON.stringify(data));
+    
+    console.log(searchRes);
+    var availableBalance = searchRes.availableBalance;    
+    var income = searchRes.income;    
+    var expenses = searchRes.expenses;   
+    
+    console.log(typeof (expenses));
+    console.log(typeof (availableBalance));
+
+    console.log("upcomming data:"+typeof (data.amount));
+
+
         //condition 
     if (data.type == 'income') {
-        availableBalance += data.amount;
-        income += data.amount;
-        searchRes.availableBalance = availableBalance;
-        searchRes.income = income;
+        availableBalance += parseInt(data.amount);
+        income += parseInt(data.amount);
     } else if (data.type == 'expenses') {
-        availableBalance -= data.amount;
-        expenses += data.amount;
-        searchRes.expenses = expenses;
-        searchRes.availableBalance = availableBalance;
+        availableBalance -= parseInt(data.amount);
+        expenses+=parseInt(data.amount);
     }
     const value = {
         availableBalance: availableBalance,
@@ -69,7 +75,6 @@ export const makeTransaction = async(req, res) => {
         
     } catch (error) {
         res.status(500).json({ message: error.message });
-
     }
 }
 //fetch all transaction 

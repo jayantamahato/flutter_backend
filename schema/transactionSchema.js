@@ -7,9 +7,6 @@ const transactionSchema = new mongoose.Schema({
     amount: {
         type: Number
     },
-    category: {
-        type: String
-    },
     massage: {
         type: String
     },
